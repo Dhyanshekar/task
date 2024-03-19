@@ -1,12 +1,12 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,12 +21,15 @@ public class Tasks {
     private Long taskId;
 
     @Enumerated(EnumType.STRING)
+    @NotNull
     private Status status;
 
     @Column
+    @Future
     private LocalDateTime deadlineDate;
 
     @Column
+    @NotNull
     private String task;
 
     @ManyToOne

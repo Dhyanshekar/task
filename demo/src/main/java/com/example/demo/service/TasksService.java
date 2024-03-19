@@ -4,9 +4,9 @@ import com.example.demo.entity.Status;
 import com.example.demo.entity.Tasks;
 import com.example.demo.repository.TasksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class TasksService {
@@ -14,8 +14,8 @@ public class TasksService {
     @Autowired
     private TasksRepository tasksRepository;
 
-    public List<Tasks> getAllTasks() {
-        return tasksRepository.findAll();
+    public Page<Tasks> getAllTasks(Pageable pageable) {
+        return tasksRepository.findAll(pageable);
     }
 
     public Tasks createTask(Tasks task) {
@@ -27,8 +27,12 @@ public class TasksService {
         return tasksRepository.save(task);
     }
 
-    public List<Tasks> getAllPendingTasks() {
-        return tasksRepository.findByStatus(Status.PENDING);
+    public Page<Tasks> getAllPendingTasks(Pageable pageable) {
+        return tasksRepository.findByStatus(Status.PENDING, pageable);
+    }
+
+    public Page<Tasks> getAllCompletedTasks(Pageable pageable) {
+        return tasksRepository.findByStatus(Status.COMPLETED, pageable);
     }
 
     public void deleteTask(Long id) {
